@@ -209,7 +209,11 @@ function tao_preprocess_fieldset(&$vars) {
     $vars['attributes']['class'][] = 'titled';
   }
   if (!empty($element['#id'])) {
-    $vars['attributes']['id'] = $element['#id'];
+    if (!empty($element["#attributes"]["id"])) {
+      $vars['attributes']['id'] = $element["#attributes"]["id"];
+    } else {
+      $vars['attributes']['id'] = $element['#id'];
+    }
   }
 
   $description = !empty($element['#description']) ? "<div class='description'>{$element['#description']}</div>" : '';
