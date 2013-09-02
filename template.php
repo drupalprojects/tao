@@ -242,8 +242,8 @@ function tao_preprocess_field(&$vars) {
  * Override of theme('textarea').
  * Deprecate misc/textarea.js in favor of using the 'resize' CSS3 property.
  */
-function tao_textarea($variables) {
-  $element = $variables['element'];
+function tao_textarea($vars) {
+  $element = $vars['element'];
   $element['#attributes']['name'] = $element['#name'];
   $element['#attributes']['id'] = $element['#id'];
   $element['#attributes']['cols'] = $element['#cols'];
