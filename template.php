@@ -119,10 +119,10 @@ function tao_preprocess_block(&$vars) {
 
   $vars['attributes_array']['id'] = $vars['block_html_id'];
 
-  $vars['title_attributes_array']['class'][] = 'block-title';
+  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-title';
   $vars['title_attributes_array']['class'][] = 'clearfix';
 
-  $vars['content_attributes_array']['class'][] = 'block-content';
+  $vars['content_attributes_array']['class'][] = $vars['hook'] . 'content';
   $vars['content_attributes_array']['class'][] = 'clearfix';
   if ($vars['block']->module == 'block') {
     $vars['content_attributes_array']['class'][] = 'prose';
@@ -147,12 +147,14 @@ function tao_preprocess_block(&$vars) {
 function tao_preprocess_node(&$vars) {
   $vars['hook'] = 'node';
 
+  $vars['classes_array'][] = 'clearfix';
+
   $vars['attributes_array']['id'] = "node-{$vars['node']->nid}";
 
-  $vars['title_attributes_array']['class'][] = 'node-title';
+  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-title';
   $vars['title_attributes_array']['class'][] = 'clearfix';
 
-  $vars['content_attributes_array']['class'][] = 'node-content';
+  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-content';
   $vars['content_attributes_array']['class'][] = 'clearfix';
   $vars['content_attributes_array']['class'][] = 'prose';
 
@@ -180,10 +182,12 @@ function tao_preprocess_node(&$vars) {
 function tao_preprocess_comment(&$vars) {
   $vars['hook'] = 'comment';
 
-  $vars['title_attributes_array']['class'][] = 'comment-title';
+  $vars['classes_array'][] = 'clearfix';
+
+  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-title';
   $vars['title_attributes_array']['class'][] = 'clearfix';
 
-  $vars['content_attributes_array']['class'][] = 'comment-content';
+  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-content';
   $vars['content_attributes_array']['class'][] = 'clearfix';
 
   $vars['submitted'] = t('Submitted by !username on !datetime', array(
@@ -201,6 +205,8 @@ function tao_preprocess_comment(&$vars) {
  * Implementation of preprocess_fieldset().
  */
 function tao_preprocess_fieldset(&$vars) {
+  $vars['hook'] = 'fieldset';
+
   $element = $vars['element'];
   _form_set_class($element, array('form-wrapper'));
   $vars['attributes'] = isset($element['#attributes']) ? $element['#attributes'] : array();
@@ -216,12 +222,19 @@ function tao_preprocess_fieldset(&$vars) {
     }
   }
 
-  $description = !empty($element['#description']) ? "<div class='description'>{$element['#description']}</div>" : '';
+  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-title';
+  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-legend';
+  $vars['title_attributes_array']['class'][] = 'clearfix';
+
+  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-content';
+  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-wrapper';
+  $vars['content_attributes_array']['class'][] = 'clearfix';
+
+  $description = !empty($element['#description']) ? '<div class="description">' . $element['#description'] . '</div>' : '';
   $children = !empty($element['#children']) ? $element['#children'] : '';
   $value = !empty($element['#value']) ? $element['#value'] : '';
   $vars['content'] = $description . $children . $value;
   $vars['title'] = !empty($element['#title']) ? $element['#title'] : '';
-  $vars['hook'] = 'fieldset';
 }
 
 /**
@@ -308,7 +321,7 @@ function tao_pager($vars) {
     'attributes' => array('class' => 'links pager pager-links')
   ));
   if ($pager_list) {
-    return "<div class='pager clearfix'>$pager_list $pager_links</div>";
+    return '<div class="pager clearfix">' . $pager_list . ' ' . $pager_links . '</div>';
   }
 }
 
