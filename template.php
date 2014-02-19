@@ -118,11 +118,12 @@ function tao_preprocess_block(&$vars) {
   $vars['hook'] = 'block';
 
   $vars['attributes_array']['id'] = $vars['block_html_id'];
+  $vars['attributes_array']['class'] = $vars['classes_array'];
 
   $vars['title_attributes_array']['class'][] = $vars['hook'] . '-title';
   $vars['title_attributes_array']['class'][] = 'clearfix';
 
-  $vars['content_attributes_array']['class'][] = $vars['hook'] . 'content';
+  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-content';
   $vars['content_attributes_array']['class'][] = 'clearfix';
   if ($vars['block']->module == 'block') {
     $vars['content_attributes_array']['class'][] = 'prose';

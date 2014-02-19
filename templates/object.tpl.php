@@ -1,6 +1,6 @@
 <?php if (!empty($pre_object)) print render($pre_object) ?>
 
-<div<?php print $title_attributes ?>>
+<div<?php print $attributes ?>>
   <?php if (!empty($title_prefix)) print render($title_prefix); ?>
 
   <?php if (!empty($title)): ?>
