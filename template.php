@@ -97,6 +97,23 @@ function tao_theme() {
  */
 function tao_preprocess_html(&$vars) {
   $vars['classes_array'][] = 'tao';
+
+  // Add IE from theme file.
+  $tao_path = drupal_get_path('theme', 'tao');
+  $info = drupal_parse_info_file($tao_path.'/tao.info');
+  $ie = $info['stylesheets']['ie'];
+  foreach ($ie as $key => $value) {
+    drupal_add_css(
+      $tao_path.'/'.$value,
+      array(
+        'browsers' => array(
+          'IE' => $key,
+          '!IE' => FALSE
+        )
+      )
+    );
+  }
+
 }
 
 /**
