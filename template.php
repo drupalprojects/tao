@@ -223,8 +223,6 @@ function tao_preprocess_comment(&$vars) {
  * Implementation of preprocess_fieldset().
  */
 function tao_preprocess_fieldset(&$vars) {
-  $vars['hook'] = 'fieldset';
-
   $element = $vars['element'];
   _form_set_class($element, array('form-wrapper'));
   $vars['attributes'] = isset($element['#attributes']) ? $element['#attributes'] : array();
@@ -240,19 +238,12 @@ function tao_preprocess_fieldset(&$vars) {
     }
   }
 
-  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-title';
-  $vars['title_attributes_array']['class'][] = $vars['hook'] . '-legend';
-  $vars['title_attributes_array']['class'][] = 'clearfix';
-
-  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-content';
-  $vars['content_attributes_array']['class'][] = $vars['hook'] . '-wrapper';
-  $vars['content_attributes_array']['class'][] = 'clearfix';
-
-  $description = !empty($element['#description']) ? '<div class="description">' . $element['#description'] . '</div>' : '';
+  $description = !empty($element['#description']) ? "<div class='description'>{$element['#description']}</div>" : '';
   $children = !empty($element['#children']) ? $element['#children'] : '';
   $value = !empty($element['#value']) ? $element['#value'] : '';
   $vars['content'] = $description . $children . $value;
   $vars['title'] = !empty($element['#title']) ? $element['#title'] : '';
+  $vars['hook'] = 'fieldset';
 }
 
 /**
